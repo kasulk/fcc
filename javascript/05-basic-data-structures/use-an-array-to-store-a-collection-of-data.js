@@ -1,0 +1,1 @@
+let yourArray = ['geil', 2, true, false, null]
