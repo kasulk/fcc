@@ -6,24 +6,23 @@ type Output = {
 function checkCashRegister(
   price: number,
   cash: number,
-  cid: [string, number][]
+  cashInDrawer: [string, number][]
 ): Output {
-  // calculate the amount of the change
+  // calculate the amount of the change due
   // create a map with the units amounts
   // loop through the untis in the map
-  // until a unit is found that is smaller than or equal the change
+  // until a unit is found that is smaller than or equal the change due
   // subtract as many units from the cash register as fit into the change amount
-  // save the units and their amount to the output change array
-  // (without the unit in the register becoming smaller 0)
-  // if the unit is 0, and if the due change isn't 0
-  // go on with the next unit
+  // (and without the unit in the register becoming smaller 0)
+  // save the withdrawn units and their amount to the output change array
+
   // after the loop,
   // if there is still change due, return 'INSUFFICIENT_FUNDS' ...
   // if the change due equals the cash in drawer, return 'CLOSED' ...
-  // else return 'OPEN' ...
+  // else return 'OPEN' and the change
 
-  let changeDue = cash - price;
   const change: [string, number][] = [];
+  let changeDue: number = cash - price;
   let emptyUnitsCount = 0;
 
   const currencyUnits = {
@@ -41,16 +40,19 @@ function checkCashRegister(
   for (let unit in currencyUnits) {
     const currentUnitSize = currencyUnits[unit];
 
-    const drawerUnitAmount = getUnitAmountInDrawer(cid, unit);
+    const drawerUnitAmount = getUnitAmountInDrawer(cashInDrawer, unit);
     if (drawerUnitAmount === 0) emptyUnitsCount++;
     if (currentUnitSize > changeDue) continue;
 
-    const withdrawableUnits = Math.trunc(drawerUnitAmount / currentUnitSize);
+    const withdrawableUnits = calcWithdrawableUnits(
+      drawerUnitAmount,
+      currentUnitSize
+    );
 
     if (withdrawableUnits === 0) continue;
 
-    const neededUnits = Math.trunc(changeDue / currentUnitSize);
-    const withdrawnUnits = Math.min(withdrawableUnits, neededUnits);
+    const neededUnits = calcNeededUnits(changeDue, currentUnitSize);
+    const withdrawnUnits = calcWithdrawnUnits(withdrawableUnits, neededUnits);
 
     if (withdrawnUnits === withdrawableUnits) emptyUnitsCount++;
 
@@ -58,6 +60,7 @@ function checkCashRegister(
       withdrawnUnits,
       currentUnitSize
     );
+
     changeDue = calcRemainingChangeDue(
       changeDue,
       withdrawnUnits,
@@ -68,19 +71,36 @@ function checkCashRegister(
   }
 
   if (changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] };
-  if (emptyUnitsCount === cid.length) return { status: "CLOSED", change: cid };
+  if (emptyUnitsCount === cashInDrawer.length)
+    return { status: "CLOSED", change: cashInDrawer };
 
   return { status: "OPEN", change: change };
 }
 
-function getUnitAmountInDrawer(cid, unit) {
-  return cid.find((cidUnit) => cidUnit[0] === unit)![1];
+function getUnitAmountInDrawer(cashInDrawer: [string, number][], unit: string) {
+  return cashInDrawer.find((cidUnit) => cidUnit[0] === unit)![1];
 }
 
-function calcWithdrawnUnitAmount(withdrawnUnits, currentUnitSize) {
-  return Number((withdrawnUnits * currentUnitSize).toFixed(2));
+function calcWithdrawableUnits(unitAmount: number, unitSize: number) {
+  return Math.trunc(unitAmount / unitSize);
 }
 
-function calcRemainingChangeDue(changeDue, withdrawnUnits, currentUnitSize) {
-  return Number((changeDue - withdrawnUnits * currentUnitSize).toFixed(2));
+function calcNeededUnits(changeDue: number, unitSize: number) {
+  return Math.trunc(changeDue / unitSize);
+}
+
+function calcWithdrawnUnits(withdrawableUnits: number, neededUnits: number) {
+  return Math.min(withdrawableUnits, neededUnits);
+}
+
+function calcWithdrawnUnitAmount(units: number, unitSize: number) {
+  return Number((units * unitSize).toFixed(2));
+}
+
+function calcRemainingChangeDue(
+  changeDue: number,
+  units: number,
+  unitSize: number
+) {
+  return Number((changeDue - units * unitSize).toFixed(2));
 }
