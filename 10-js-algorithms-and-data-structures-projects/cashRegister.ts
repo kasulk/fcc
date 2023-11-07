@@ -23,8 +23,8 @@ function checkCashRegister(
   // else return 'OPEN' ...
 
   let changeDue = cash - price;
-  // let output: Output = { status: "OPEN", change: [] };
   const change: [string, number][] = [];
+  let emptyUnitsCount = 0;
 
   const currencyUnits = {
     "ONE HUNDRED": 100,
@@ -38,34 +38,49 @@ function checkCashRegister(
     PENNY: 0.01,
   };
 
-  let emptyUnitsCount = 0;
-
   for (let unit in currencyUnits) {
     const currentUnitSize = currencyUnits[unit];
 
-    const unitAmountInRegister = cid.find((cidUnit) => cidUnit[0] === unit)![1];
-    if (unitAmountInRegister === 0) emptyUnitsCount++;
+    const drawerUnitAmount = getUnitAmountInDrawer(cid, unit);
+    if (drawerUnitAmount === 0) emptyUnitsCount++;
     if (currentUnitSize > changeDue) continue;
 
-    const possibleRemoveableUnits = Math.trunc(
-      unitAmountInRegister / currentUnitSize
+    const withdrawableUnits = Math.trunc(drawerUnitAmount / currentUnitSize);
+
+    if (withdrawableUnits === 0) continue;
+
+    const neededUnits = Math.trunc(changeDue / currentUnitSize);
+    const withdrawnUnits = Math.min(withdrawableUnits, neededUnits);
+
+    if (withdrawnUnits === withdrawableUnits) emptyUnitsCount++;
+
+    const withdrawnUnitAmount = calcWithdrawnUnitAmount(
+      withdrawnUnits,
+      currentUnitSize
+    );
+    changeDue = calcRemainingChangeDue(
+      changeDue,
+      withdrawnUnits,
+      currentUnitSize
     );
 
-    if (possibleRemoveableUnits === 0) continue;
-
-    const amountOfUnitsNeeded = Math.trunc(changeDue / currentUnitSize);
-    const removedUnits = Math.min(possibleRemoveableUnits, amountOfUnitsNeeded);
-
-    if (removedUnits === possibleRemoveableUnits) emptyUnitsCount++;
-
-    const unitChange = Number((removedUnits * currentUnitSize).toFixed(2));
-    changeDue = Number((changeDue - removedUnits * currentUnitSize).toFixed(2));
-
-    change.push([unit, unitChange]);
+    change.push([unit, withdrawnUnitAmount]);
   }
 
   if (changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] };
   if (emptyUnitsCount === cid.length) return { status: "CLOSED", change: cid };
 
   return { status: "OPEN", change: change };
+}
+
+function getUnitAmountInDrawer(cid, unit) {
+  return cid.find((cidUnit) => cidUnit[0] === unit)![1];
+}
+
+function calcWithdrawnUnitAmount(withdrawnUnits, currentUnitSize) {
+  return Number((withdrawnUnits * currentUnitSize).toFixed(2));
+}
+
+function calcRemainingChangeDue(changeDue, withdrawnUnits, currentUnitSize) {
+  return Number((changeDue - withdrawnUnits * currentUnitSize).toFixed(2));
 }
