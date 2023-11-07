@@ -37,12 +37,17 @@ function checkCashRegister(
     PENNY: 0.01,
   };
 
+  // let registerIsEmpty = false;
+  let emptyUnitsCount = 0;
+
   for (let unit in currencyUnits) {
     const currentUnitSize = currencyUnits[unit]; // 5
 
+    const unitAmountInRegister = cid.find((cidUnit) => cidUnit[0] === unit)![1];
+    if (unitAmountInRegister === 0) emptyUnitsCount++;
+
     if (currentUnitSize > changeDue) continue; // 5 > 16.74
 
-    const unitAmountInRegister = cid.find((cidUnit) => cidUnit[0] === unit)![1];
     // 55
     // console.log("unitAmountInRegister", unit, unitAmountInRegister);
 
@@ -57,33 +62,53 @@ function checkCashRegister(
 
     const removedUnits = Math.min(possibleRemoveableUnits, amountOfUnitsNeeded);
 
+    if (removedUnits === possibleRemoveableUnits) emptyUnitsCount++;
+
     const unitChange = Number((removedUnits * currentUnitSize).toFixed(2));
 
     // console.log("oldChangeDue:", changeDue);
-    // changeDue = changeDue - removedUnits * currentUnitSize;
     changeDue = Number((changeDue - removedUnits * currentUnitSize).toFixed(2));
-    console.log("newChangeDue:", changeDue);
+    // console.log("newChangeDue:", changeDue);
 
     change.change.push([unit, unitChange]);
     // console.log("change.change", change.change);
   }
 
+  if (changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] };
+
+  // if (JSON.stringify(cid) === JSON.stringify(change.change))
+  if (emptyUnitsCount === cid.length) return { status: "CLOSED", change: cid };
+
   return change;
 }
 
-//
-//
-checkCashRegister(3.26, 100, [
-  ["PENNY", 1.01],
-  ["NICKEL", 2.05],
-  ["DIME", 3.1],
-  ["QUARTER", 4.25],
-  ["ONE", 90],
-  ["FIVE", 55],
-  ["TEN", 20],
-  ["TWENTY", 60],
-  ["ONE HUNDRED", 100],
+// if any unit is not empty, change a variable registerIsEmpty to false
+// once its false, it can't be reverted
+
+checkCashRegister(19.5, 20, [
+  ["PENNY", 0.5],
+  ["NICKEL", 0],
+  ["DIME", 0],
+  ["QUARTER", 0],
+  ["ONE", 0],
+  ["FIVE", 0],
+  ["TEN", 0],
+  ["TWENTY", 0],
+  ["ONE HUNDRED", 0],
 ]);
+//
+//
+// checkCashRegister(3.26, 100, [
+//   ["PENNY", 1.01],
+//   ["NICKEL", 2.05],
+//   ["DIME", 3.1],
+//   ["QUARTER", 4.25],
+//   ["ONE", 90],
+//   ["FIVE", 55],
+//   ["TEN", 20],
+//   ["TWENTY", 60],
+//   ["ONE HUNDRED", 100],
+// ]);
 //should return
 // {
 //   status: "OPEN",
