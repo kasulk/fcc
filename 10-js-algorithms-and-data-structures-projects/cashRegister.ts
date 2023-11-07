@@ -38,37 +38,65 @@ function checkCashRegister(
   };
 
   for (let unit in currencyUnits) {
-    const currentUnitSize = currencyUnits[unit]; //
+    const currentUnitSize = currencyUnits[unit]; // 5
 
-    if (currentUnitSize > changeDue) continue; //
+    if (currentUnitSize > changeDue) continue; // 5 > 16.74
 
-    const unitAmountInRegister = cid.find((cidUnit) => cidUnit[0] === unit)![1]; //
+    const unitAmountInRegister = cid.find((cidUnit) => cidUnit[0] === unit)![1];
+    // 55
     // console.log("unitAmountInRegister", unit, unitAmountInRegister);
 
     const possibleRemoveableUnits = Math.trunc(
-      unitAmountInRegister / currentUnitSize //
-    ); //! 0.5 // 50x
+      unitAmountInRegister / currentUnitSize // 55 / 5 = 11
+    );
 
     if (possibleRemoveableUnits === 0) continue;
 
-    const amountOfUnitsNeeded = changeDue / currentUnitSize; //
-    //! 0.3 // 30x
+    // const amountOfUnitsNeeded = changeDue / currentUnitSize; // 16.73 / 5 = 3.
+    const amountOfUnitsNeeded = Math.trunc(changeDue / currentUnitSize); // 16.73 / 5 = 3.
 
     const removedUnits = Math.min(possibleRemoveableUnits, amountOfUnitsNeeded);
 
-    const unitChange = removedUnits * currentUnitSize;
+    const unitChange = Number((removedUnits * currentUnitSize).toFixed(2));
 
     // console.log("oldChangeDue:", changeDue);
-    changeDue = changeDue - removedUnits * currentUnitSize;
-    // console.log("newChangeDue:", changeDue);
+    // changeDue = changeDue - removedUnits * currentUnitSize;
+    changeDue = Number((changeDue - removedUnits * currentUnitSize).toFixed(2));
+    console.log("newChangeDue:", changeDue);
 
     change.change.push([unit, unitChange]);
-    console.log("change.change", change.change);
+    // console.log("change.change", change.change);
   }
 
   return change;
 }
 
+//
+//
+checkCashRegister(3.26, 100, [
+  ["PENNY", 1.01],
+  ["NICKEL", 2.05],
+  ["DIME", 3.1],
+  ["QUARTER", 4.25],
+  ["ONE", 90],
+  ["FIVE", 55],
+  ["TEN", 20],
+  ["TWENTY", 60],
+  ["ONE HUNDRED", 100],
+]);
+//should return
+// {
+//   status: "OPEN",
+//   change: [
+//     ["TWENTY", 60],
+//     ["TEN", 20],
+//     ["FIVE", 15],
+//     ["ONE", 1],
+//     ["QUARTER", 0.5],
+//     ["DIME", 0.2],
+//     ["PENNY", 0.04],
+//   ],
+// };
 //
 //
 // checkCashRegister(19.5, 20, [
@@ -86,18 +114,18 @@ function checkCashRegister(
 // should return
 // {status: "OPEN", change: [["QUARTER", 0.5]]}
 
-checkCashRegister(19.5, 20, [
-  ["PENNY", 0.5],
-  // ["NICKEL", 0],
-  ["NICKEL", 0.2],
-  ["DIME", 0],
-  ["QUARTER", 0],
-  ["ONE", 0],
-  ["FIVE", 0],
-  ["TEN", 0],
-  ["TWENTY", 0],
-  ["ONE HUNDRED", 0],
-]);
+// checkCashRegister(19.5, 20, [
+//   ["PENNY", 0.5],
+//   // ["NICKEL", 0],
+//   ["NICKEL", 0.2],
+//   ["DIME", 0],
+//   ["QUARTER", 0],
+//   ["ONE", 0],
+//   ["FIVE", 0],
+//   ["TEN", 0],
+//   ["TWENTY", 0],
+//   ["ONE HUNDRED", 0],
+// ]);
 
 /* should return
 {
