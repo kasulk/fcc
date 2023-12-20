@@ -1,5 +1,17 @@
-class MyComponent extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IMyComponentProps {
+  [key: string]: never;
+}
+interface IMyComponentState {
+  text: string;
+}
+
+export class MyComponent extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
+  constructor(props: IMyComponentProps) {
     super(props);
     this.state = {
       text: "Hello",
