@@ -1,4 +1,6 @@
-const JSX = (
+import React from "react";
+
+export const JSX = (
   <div>
     <h1>Heading</h1>
     <p>Some Paragraph</p>
