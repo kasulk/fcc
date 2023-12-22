@@ -1,8 +1,18 @@
-class OnlyEvens extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IProps {
+  value: number;
+}
+
+interface IState {
+  value: number;
+}
+
+export class OnlyEvens extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
   }
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: IProps, nextState: IState) {
     console.log("Should I update?");
     // Change code below this line
     return nextProps.value % 2 === 0;
@@ -16,8 +26,8 @@ class OnlyEvens extends React.Component {
   }
 }
 
-class Controller extends React.Component {
-  constructor(props) {
+export class Controller extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       value: 0,
