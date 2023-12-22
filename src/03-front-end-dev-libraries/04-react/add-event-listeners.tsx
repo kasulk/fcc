@@ -1,5 +1,15 @@
-class MyComponent extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IMyComponentProps {}
+interface IMyComponentState {
+  message: string;
+}
+
+export class MyComponent extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
+  constructor(props: IMyComponentProps) {
     super(props);
     this.state = {
       message: "",
@@ -9,10 +19,13 @@ class MyComponent extends React.Component {
   }
   // Change code below this line
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyPress);
+    document.addEventListener("keydown", this.handleKeyPress as EventListener);
   }
   componentWillUnmount() {
-    document.removeEventListener("keydown", this.handleKeyPress);
+    document.removeEventListener(
+      "keydown",
+      this.handleKeyPress as EventListener
+    );
   }
   // Change code above this line
   handleEnter() {
@@ -20,8 +33,9 @@ class MyComponent extends React.Component {
       message: state.message + "You pressed the enter key! ",
     }));
   }
-  handleKeyPress(event) {
-    if (event.keyCode === 13) {
+  handleKeyPress(event: Event) {
+    const keyboardEvent = event as KeyboardEvent;
+    if (keyboardEvent.keyCode === 13) {
       this.handleEnter();
     }
   }
