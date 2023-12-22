@@ -1,4 +1,6 @@
-const ChildComponent = () => {
+import React from "react";
+
+export const ChildComponent = () => {
   return (
     <div>
       <p>I am the child</p>
@@ -6,8 +8,10 @@ const ChildComponent = () => {
   );
 };
 
-class ParentComponent extends React.Component {
-  constructor(props) {
+interface IParentComponentProps {}
+
+export class ParentComponent extends React.Component<IParentComponentProps> {
+  constructor(props: IParentComponentProps) {
     super(props);
   }
   render() {
