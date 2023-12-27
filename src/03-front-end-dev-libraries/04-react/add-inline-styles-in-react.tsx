@@ -1,10 +1,16 @@
-const styles = {
+import React from "react";
+
+interface IStyles {
+  [key: string]: string | number;
+}
+
+const styles: IStyles = {
   color: "purple",
   fontSize: 40,
   border: "2px solid purple",
 };
 // Change code above this line
-class Colorful extends React.Component {
+export class Colorful extends React.Component {
   render() {
     // Change code below this line
     return <div style={styles}>Style Me!</div>;
