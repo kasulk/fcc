@@ -1,5 +1,14 @@
-class MyForm extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IMyFormState {
+  input: string;
+  submit: string;
+}
+
+interface IMyFormProps {}
+
+export class MyForm extends React.Component<IMyFormProps, IMyFormState> {
+  constructor(props: IMyFormProps) {
     super(props);
     this.state = {
       input: "",
