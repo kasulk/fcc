@@ -1,6 +1,6 @@
 import React from "react";
 
-export const JSX = (
+export const JSX = () => {
   <div>
     <h1>Heading</h1>
     <p>Some Paragraph</p>
@@ -9,5 +9,5 @@ export const JSX = (
       <li>Text</li>
       <li>You Want</li>
     </ul>
-  </div>
-);
+  </div>;
+};
