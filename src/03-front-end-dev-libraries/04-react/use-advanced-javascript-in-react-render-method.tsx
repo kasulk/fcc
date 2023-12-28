@@ -1,10 +1,21 @@
+import React from "react";
+
+interface IMagicEightBallProps {}
+interface IMagicEightBallState {
+  userInput: string;
+  randomIndex: number | "";
+}
+
 const inputStyle = {
   width: 235,
   margin: 5,
 };
 
-class MagicEightBall extends React.Component {
-  constructor(props) {
+export class MagicEightBall extends React.Component<
+  IMagicEightBallProps,
+  IMagicEightBallState
+> {
+  constructor(props: IMagicEightBallProps) {
     super(props);
     this.state = {
       userInput: "",
