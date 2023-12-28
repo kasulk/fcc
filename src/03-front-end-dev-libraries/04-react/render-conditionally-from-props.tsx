@@ -1,17 +1,31 @@
-class Results extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IResultsProps {
+  fiftyFifty: boolean;
+}
+interface IGameOfChanceProps {}
+interface IGameOfChanceState {
+  counter: number;
+}
+
+export class Results extends React.Component<IResultsProps> {
+  constructor(props: IResultsProps) {
     super(props);
   }
 
   render() {
-    { /* Change code below this line */ }
+    {
+      /* Change code below this line */
+    }
     return <h1>{this.props.fiftyFifty ? "You Win!" : "You Lose!"}</h1>;
-    { /* Change code above this line */ }
   }
 }
 
-class GameOfChance extends React.Component {
-  constructor(props) {
+export class GameOfChance extends React.Component<
+  IGameOfChanceProps,
+  IGameOfChanceState
+> {
+  constructor(props: IGameOfChanceProps) {
     super(props);
     this.state = {
       counter: 1,
@@ -30,6 +44,7 @@ class GameOfChance extends React.Component {
 
   render() {
     const expression = Math.random() < 0.5;
+
     return (
       <div>
         <button onClick={this.handleClick}>Play Again</button>
