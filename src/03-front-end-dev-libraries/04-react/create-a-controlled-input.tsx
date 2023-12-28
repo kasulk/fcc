@@ -1,5 +1,15 @@
-class ControlledInput extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IControlledInputProps {}
+interface IControlledInputState {
+  input: string;
+}
+
+export class ControlledInput extends React.Component<
+  IControlledInputProps,
+  IControlledInputState
+> {
+  constructor(props: IControlledInputProps) {
     super(props);
     this.state = {
       input: "",
