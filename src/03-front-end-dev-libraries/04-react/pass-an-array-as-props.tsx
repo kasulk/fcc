@@ -1,4 +1,10 @@
-const List = (props) => {
+import React from "react";
+
+interface IListProps {
+  tasks: string[];
+}
+
+export const List = (props: IListProps) => {
   {
     /* Change code below this line */
   }
@@ -8,7 +14,7 @@ const List = (props) => {
   }
 };
 
-class ToDo extends React.Component {
+export class ToDo extends React.Component {
   constructor(props) {
     super(props);
   }
