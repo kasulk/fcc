@@ -1,4 +1,5 @@
-import React, { ReactDOM } from "react";
+import React from "react";
+import ReactDOM from "react-dom";
 
 export class TypesOfFood extends React.Component {
   constructor(props) {
@@ -17,8 +18,8 @@ export class TypesOfFood extends React.Component {
   }
 }
 
-export function Fruits() {}
-export function Vegetables() {}
+export const Fruits = () => <span>Banana</span>;
+export const Vegetables = () => <span>Kiwi</span>;
 
 // Change code below this line
 const challengeNode = document.querySelector("#challenge-node");
