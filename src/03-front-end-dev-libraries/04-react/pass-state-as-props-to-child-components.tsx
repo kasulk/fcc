@@ -1,5 +1,15 @@
-class MyApp extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IMyAppProps {}
+interface IMyAppState {
+  name: string;
+}
+interface INavbarProps {
+  name: string;
+}
+
+export class MyApp extends React.Component<IMyAppProps, IMyAppState> {
+  constructor(props: IMyAppProps) {
     super(props);
     this.state = {
       name: "CamperBot",
@@ -16,8 +26,8 @@ class MyApp extends React.Component {
   }
 }
 
-class Navbar extends React.Component {
-  constructor(props) {
+export class Navbar extends React.Component<INavbarProps> {
+  constructor(props: INavbarProps) {
     super(props);
   }
   render() {
