@@ -1,16 +1,33 @@
-class MyApp extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IMyAppProps {}
+interface IMyAppState {
+  inputValue: string;
+}
+interface IGetInputProps {
+  input: string;
+  handleChange: (event: React.ChangeEvent) => void;
+}
+interface IRenderInputProps {
+  input: string;
+}
+
+export class MyApp extends React.Component<IMyAppProps, IMyAppState> {
+  constructor(props: IMyAppProps) {
     super(props);
     this.state = {
       inputValue: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(event) {
+
+  handleChange(event: React.ChangeEvent) {
+    const input = event.target as HTMLInputElement;
     this.setState({
-      inputValue: event.target.value,
+      inputValue: input.value,
     });
   }
+
   render() {
     const { inputValue } = this.state;
     return (
@@ -24,10 +41,11 @@ class MyApp extends React.Component {
   }
 }
 
-class GetInput extends React.Component {
-  constructor(props) {
+export class GetInput extends React.Component<IGetInputProps> {
+  constructor(props: IGetInputProps) {
     super(props);
   }
+
   render() {
     return (
       <div>
@@ -38,10 +56,11 @@ class GetInput extends React.Component {
   }
 }
 
-class RenderInput extends React.Component {
-  constructor(props) {
+export class RenderInput extends React.Component<IRenderInputProps> {
+  constructor(props: IRenderInputProps) {
     super(props);
   }
+
   render() {
     return (
       <div>
