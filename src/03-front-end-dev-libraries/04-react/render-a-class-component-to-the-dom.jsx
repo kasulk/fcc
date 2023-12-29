@@ -1,4 +1,6 @@
-class TypesOfFood extends React.Component {
+import React, { ReactDOM } from "react";
+
+export class TypesOfFood extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -14,6 +16,9 @@ class TypesOfFood extends React.Component {
     );
   }
 }
+
+export function Fruits() {}
+export function Vegetables() {}
 
 // Change code below this line
 const challengeNode = document.querySelector("#challenge-node");
