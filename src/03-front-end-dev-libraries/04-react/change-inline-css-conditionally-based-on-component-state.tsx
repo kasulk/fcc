@@ -1,5 +1,15 @@
-class GateKeeper extends React.Component {
-  constructor(props) {
+import React, { ChangeEvent } from "react";
+
+interface IGateKeeperProps {}
+interface IGateKeeperState {
+  input: string;
+}
+
+export class GateKeeper extends React.Component<
+  IGateKeeperProps,
+  IGateKeeperState
+> {
+  constructor(props: IGateKeeperProps) {
     super(props);
     this.state = {
       input: "",
@@ -7,12 +17,13 @@ class GateKeeper extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({ input: event.target.value });
+  handleChange(event: ChangeEvent) {
+    const input = event.target as HTMLInputElement;
+    this.setState({ input: input.value });
   }
 
   render() {
-    let inputStyle = {
+    const inputStyle = {
       border: "1px solid black",
     };
     // Change code below this line
