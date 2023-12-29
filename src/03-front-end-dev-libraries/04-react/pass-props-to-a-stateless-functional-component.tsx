@@ -1,4 +1,10 @@
-const CurrentDate = (props) => {
+import React from "react";
+
+interface ICurrentDateProps {
+  date: string;
+}
+
+export const CurrentDate = (props: ICurrentDateProps) => {
   return (
     <div>
       {/* Change code below this line */}
@@ -8,7 +14,7 @@ const CurrentDate = (props) => {
   );
 };
 
-class Calendar extends React.Component {
+export class Calendar extends React.Component {
   constructor(props) {
     super(props);
   }
