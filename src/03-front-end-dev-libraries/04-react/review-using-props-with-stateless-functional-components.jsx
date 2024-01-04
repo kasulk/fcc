@@ -1,4 +1,7 @@
-class CampSite extends React.Component {
+import React from "react";
+import PropTypes from "prop-types";
+
+export class CampSite extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -12,7 +15,7 @@ class CampSite extends React.Component {
 }
 // Change code below this line
 
-class Camper extends React.Component {
+export class Camper extends React.Component {
   constructor(props) {
     super(props);
   }
