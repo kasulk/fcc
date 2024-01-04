@@ -1,3 +1,5 @@
+import React from "react";
+
 const frontEndFrameworks = [
   "React",
   "Angular",
@@ -7,7 +9,7 @@ const frontEndFrameworks = [
   "Vue",
 ];
 
-function Frameworks() {
+export function Frameworks() {
   const renderFrameworks = frontEndFrameworks.map((framework) => (
     <li key={framework}>{framework}</li>
   ));
