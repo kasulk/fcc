@@ -1,4 +1,6 @@
-const TypesOfFruit = () => {
+import React from "react";
+
+export const TypesOfFruit = () => {
   return (
     <div>
       <h2>Fruits:</h2>
@@ -12,7 +14,7 @@ const TypesOfFruit = () => {
   );
 };
 
-const Fruits = () => {
+export const Fruits = () => {
   return (
     <div>
       {/* Change code below this line */}
@@ -22,7 +24,7 @@ const Fruits = () => {
   );
 };
 
-class TypesOfFood extends React.Component {
+export class TypesOfFood extends React.Component {
   constructor(props) {
     super(props);
   }
