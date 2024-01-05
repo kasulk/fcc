@@ -1,3 +1,5 @@
+import React from "react";
+import ReactDOM from "react-dom";
 // Change code below this line
 
 class MyComponent extends React.Component {
