@@ -1,10 +1,21 @@
+import React from "react";
+
+interface ICheckUserAgeProps {}
+interface ICheckUserAgeState {
+  input: number | "";
+  userAge: number | "";
+}
+
 const inputStyle = {
   width: 235,
   margin: 5,
 };
 
-class CheckUserAge extends React.Component {
-  constructor(props) {
+export class CheckUserAge extends React.Component<
+  ICheckUserAgeProps,
+  ICheckUserAgeState
+> {
+  constructor(props: ICheckUserAgeProps) {
     super(props);
     // Change code below this line
     this.state = {
