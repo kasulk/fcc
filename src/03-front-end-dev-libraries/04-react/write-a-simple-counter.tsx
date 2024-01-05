@@ -1,5 +1,12 @@
-class Counter extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface ICounterProps {}
+interface ICounterState {
+  count: number;
+}
+
+export class Counter extends React.Component<ICounterProps, ICounterState> {
+  constructor(props: ICounterProps) {
     super(props);
     this.state = {
       count: 0,
@@ -12,13 +19,19 @@ class Counter extends React.Component {
   }
   // Change code below this line
   increment() {
-    this.setState((prevState) => prevState.count++);
+    this.setState((prevState) => ({
+      count: prevState.count + 1,
+    }));
   }
   decrement() {
-    this.setState((prevState) => prevState.count--);
+    this.setState((prevState) => ({
+      count: prevState.count - 1,
+    }));
   }
   reset() {
-    this.setState((prevState) => (prevState.count = 0));
+    this.setState({
+      count: 0,
+    });
   }
   // Change code above this line
   render() {
