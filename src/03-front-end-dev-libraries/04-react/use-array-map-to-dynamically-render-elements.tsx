@@ -1,10 +1,21 @@
+import React from "react";
+
+interface IMyToDoListProps {}
+interface IMyToDoListState {
+  userInput: string;
+  toDoList: string[];
+}
+
 const textAreaStyles = {
   width: 235,
   margin: 5,
 };
 
-class MyToDoList extends React.Component {
-  constructor(props) {
+export class MyToDoList extends React.Component<
+  IMyToDoListProps,
+  IMyToDoListState
+> {
+  constructor(props: IMyToDoListProps) {
     super(props);
     // Change code below this line
     this.state = {
