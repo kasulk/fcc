@@ -1,5 +1,15 @@
-class MyComponent extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IMyComponentProps {}
+interface IMyComponentState {
+  visibility: boolean;
+}
+
+export class MyComponent extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
+  constructor(props: IMyComponentProps) {
     super(props);
     this.state = {
       visibility: false,
