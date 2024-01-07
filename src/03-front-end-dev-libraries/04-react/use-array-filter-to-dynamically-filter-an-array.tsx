@@ -1,5 +1,20 @@
-class MyComponent extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IUser {
+  username: string;
+  online: boolean;
+}
+
+interface IMyComponentProps {}
+interface IMyComponentState {
+  users: IUser[];
+}
+
+export class MyComponent extends React.Component<
+  IMyComponentProps,
+  IMyComponentState
+> {
+  constructor(props: IMyComponentProps) {
     super(props);
     this.state = {
       users: [
