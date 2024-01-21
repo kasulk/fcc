@@ -1,5 +1,16 @@
-class DisplayMessages extends React.Component {
-  constructor(props) {
+import React from "react";
+
+interface IDisplayMessagesProps {}
+interface IDisplayMessagesState {
+  input: string;
+  messages: string[];
+}
+
+export class DisplayMessages extends React.Component<
+  IDisplayMessagesProps,
+  IDisplayMessagesState
+> {
+  constructor(props: IDisplayMessagesProps) {
     super(props);
     this.state = {
       input: "",
